@@ -2,36 +2,62 @@ let navbar = document.querySelector('.header .navbar');
 
 let carts = document.querySelectorAll('.add-cart');
 
-let product = [
+let products = [
     {
-        name: 'Gray Tshirt',
-        tag: 'greytgshirt',
-        price: 15,
+        name: 'Bored Ape #5230',
+        tag: 'image/BoredApe.png',
+        price: 1266859,
         incart: 0,
     },
     {
-        name: 'Gray Hoddie',
-        tag: 'greytghoddie',
-        price: 20,
+        name: 'Toxic Skulls Club #9419',
+        tag: '#9419',
+        price: 47228,
         incart: 0,
     },
     {
-        name: 'Black Tshirt',
-        tag: 'blacktshirt',
-        price: 15,
+        name: 'SMOWL #4106',
+        tag: '#4106',
+        price: 211558,
         incart: 0,
     },
     {
-        name: 'black Hoddie',
-        tag: 'blackhoddie',
-        price: 20,
+        name: 'TREND SETTER #155',
+        tag: '#155',
+        price: 2043482,
         incart: 0,
-    }
+    },
+    {
+        name: 'Pudgy Penguin #3950',
+        tag: '#3950',
+        price: 310112,
+        incart: 0,
+    },
+    {
+        name: 'Sogette #4771',
+        tag: '#4771',
+        price: 698221,
+        incart: 0,
+    },
+    {
+        name: 'Bored Ape #3105',
+        tag: '#3105',
+        price: 1643878,
+        incart: 0,
+    },
+    {
+        name: 'V1 PUNK #8305',
+        tag: '#8305',
+        price: 120888,
+        incart: 0,
+    },
+    
 ];
 
 for (let i=0; i < carts.length; i++) {
     carts[i].addEventListener('click', () => {
-        cartNumbers(product[i]);
+        cartNumbers(products[i]);
+        totalCost(products[i])
     })
 }
 
@@ -66,7 +92,6 @@ function setItems(product) {
     cartItems = JSON.parse(cartItems);
 
     if(cartItems != null) {
-
         if(cartItems[product.tag] == undefined) {
             cartItems = {
                 ...cartItems,
@@ -80,12 +105,66 @@ function setItems(product) {
             [product.tag]: product
         }
     }
-    
+    localStorage.setItem("productsInCart", JSON.stringify
+    (cartItems));
+}
 
-    localStorage.setItem("productsInCart", JSON.stringify(cartItems));
+function totalCost(product) {
+    let cartCost = localStorage.getItem('totalCost');
+
+    if(cartCost != null) {
+        cartCost = parseInt(cartCost);
+        localStorage.setItem("totalCost", cartCost + 
+        product.price);
+    } else {
+        localStorage.setItem("totalCost", product.price);
+    }
+
+}
+
+function displayCart() {
+ let cartItems = localStorage.getItem("productsInCart");
+ cartItems = JSON.parse(cartItems)
+ let productContainer = document.querySelector
+ (".products");
+ let cartCost = localStorage.getItem('totalCost');
+
+ if( cartItems && productContainer ) {
+    productContainer.innerHTML = '';
+    Object.values(cartItems).map(item => {
+        productContainer.innerHTML += `
+        <div class="product">
+
+        <span>${item.name}</span>
+        </div>
+        <div class="price">${item.price},KD</div>
+        <div class="quantity">
+        <ion-icon name="caret-back-circle"></ion-icon>
+        <span>${item.inCart}</span>
+        <ion-icon name="caret-forward-circle"></ion-icon>
+        </div>
+        <div class="total">
+            ${item.inCart * item.price},00KD
+        </div>
+        `
+    });
+
+    productContainer.innerHTML += `
+    <div class="basketTotalContainer">
+        <h4 class="basketTotalTitle">
+            Total
+        </h4>
+        <h4 class="basketTotal">
+            ${cartCost},00kd
+        </h4>
+    `
+
+ }
+
 }
 
 onLoadCartNumbers(); 
+displayCart()
 
 document.querySelector('#menu-btn').onclick = () =>{
     navbar.classList.toggle('active');
