@@ -69,6 +69,23 @@ section {
   background: #130f40;
 }
 
+.add-cart{
+  display: inline-block;
+  margin-top: 1rem;
+  padding: .7rem 1.8rem;
+  font-size: 1.7rem;
+  cursor: pointer;
+  color: #fff;
+  background: #0466c8;
+  border-radius: .5rem;
+}
+
+.add-cart:hover{
+  background: #130f40;
+
+}
+
+
 .header {
   position: -webkit-sticky;
   position: sticky;
@@ -132,20 +149,17 @@ section {
   text-align: center;
 }
 
-li {
-  text-decoration: none;
-}
-
 .header .cart{
   height: 4.5rem;
   width: 4.5rem;
   line-height: 4.5rem;
+  font-size: 1rem;
+  background: #f7f7f7;
+  color: #130f40;
+  border-radius: .5rem;
   margin-left: .3rem;
   cursor: pointer;
   text-align: center;
-  font-size: 1.2rem;
-  text-decoration: none;
-
 }
 
 .header .icons div:hover {
